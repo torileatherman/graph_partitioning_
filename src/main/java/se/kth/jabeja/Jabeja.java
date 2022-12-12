@@ -49,17 +49,25 @@ public class Jabeja {
    * Simulated analealing cooling function
    */
   private void saCoolDown(){
-    // TODO for second task
-    // standard simulated annealing
-    //if (T > 1)
-    //  T -= config.getDelta();
-    //if (T < 1)
-    //  T = 1;
 
-    // new simulated annealing
-    float T_min = 0.00001f
-    float 
+    // standard simulated annealing
+    if (T > 1)
+      T -= config.getDelta();
+    if (T < 1)
+      T = 1;
   }
+    // TODO for second task
+    // new simulated annealing
+    //float T_min = 0.00001f;
+    //float T = 1f;
+    //float delta = config.getDelta();
+    //if (T > T_min){
+    //  T *= delta;
+    //}
+    //if (T < T_min){
+    //  T = T_min;
+    //}
+  //}
 
   /**
    * Sample and swap algorith at node p
@@ -72,7 +80,7 @@ public class Jabeja {
     if (config.getNodeSelectionPolicy() == NodeSelectionPolicy.HYBRID
             || config.getNodeSelectionPolicy() == NodeSelectionPolicy.LOCAL) {
       // swap with random neighbors
-      partner = findPartner(nodeID, getNeighbors(nodep));
+      partner = findPartner(nodeId, getNeighbors(nodep));
     }
 
     if (config.getNodeSelectionPolicy() == NodeSelectionPolicy.HYBRID
@@ -83,7 +91,7 @@ public class Jabeja {
     }
 
     // swap the colors
-    if (if partner != null) {
+    if (partner != null) {
       int color = partner.getColor();
       partner.setColor(nodep.getColor());
       nodep.setColor(color);
@@ -100,7 +108,8 @@ public class Jabeja {
 
     // find best node as swap partner for node p
     for (int node : nodes ) {
-      Node nodeq = entireGraph.get(node):
+      Node nodeq = entireGraph.get(node);
+      float alpha = config.getAlpha();
 
       // compute dpp and dqq
       int dpp = getDegree(nodep, nodep.getColor());
@@ -116,10 +125,10 @@ public class Jabeja {
         bestPartner = nodeq;
         highestBenefit = newvalue;
       }
-
-    return bestPartner;
     }
 
+    return bestPartner;
+    
   }
 
   /**
