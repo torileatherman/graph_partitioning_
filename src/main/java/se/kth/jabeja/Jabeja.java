@@ -20,6 +20,7 @@ public class Jabeja {
   private float T;
   private boolean resultFileCreated = false;
   private Random random = new Random();
+  private int reset_rounds = 0; 
 
   //-------------------------------------------------------------------
   public Jabeja(HashMap<Integer, Node> graph, Config config) {
@@ -60,19 +61,32 @@ public class Jabeja {
     // Implementation for Task 2
     float T_min = 0.00001f;
     float T = 1f;
-    float delta = config.getDelta();
-    if (T > T_min) {
-      T *= delta;
-    }
-    if (T <= T_min) {
+    float delta = 0.9f;
+    T *= delta;
+    if(T < T_min){
       T = T_min;
-      reset_rounds++;
+    }
+    if (T == T_min){ // reset when lowest point has reached 
+            reset_rounds++;
             if (reset_rounds == 400){ //restart simulated-annealing again after 400 rounds
                 T = 1;
                 reset_rounds = 0;
             }
-    }              
-  }
+        }
+      }
+
+      //if (T > T_min) {
+     // T *= delta;
+    //}
+    //if (T <= T_min) {
+    //  T = T_min;
+    //  reset_rounds++;
+    //        if (reset_rounds == 400){ //restart simulated-annealing again after 400 rounds
+    //            T = 1;
+     //           reset_rounds = 0;
+    //        }
+                  
+  
 
   /**
    * Sample and swap algorith at node p
@@ -135,11 +149,17 @@ public class Jabeja {
       double acceptance_prob = Math.exp((newvalue - oldvalue)/T); 
 
       // Implementation according to Task 2
-      if (newvalue > oldvalue && acceptance_prob > random.nextDouble()) { //move to the new solution
-        bestPartner = nodeq;
-        highestBenefit = newvalue;
-      }
-      else if(newvalue < oldvalue){
+      //if (newvalue > oldvalue && acceptance_prob > random.nextDouble()) { //move to the new solution
+      //  bestPartner = nodeq;
+      //  highestBenefit = newvalue;
+      //}
+      //else if(newvalue < oldvalue){
+      //  bestPartner = nodeq;
+      //  highestBenefit = newvalue;
+      //}
+
+      // Implementation for Extra Bonus
+      if(newvalue!=oldvalue && acceptance_prob > random.nextDouble() && acceptance_prob > 0.5){ //move to the new solution
         bestPartner = nodeq;
         highestBenefit = newvalue;
       }
