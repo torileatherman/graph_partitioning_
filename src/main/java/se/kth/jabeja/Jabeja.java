@@ -50,10 +50,15 @@ public class Jabeja {
    */
   private void saCoolDown(){
     // TODO for second task
-    if (T > 1)
-      T -= config.getDelta();
-    if (T < 1)
-      T = 1;
+    // standard simulated annealing
+    //if (T > 1)
+    //  T -= config.getDelta();
+    //if (T < 1)
+    //  T = 1;
+
+    // new simulated annealing
+    float T_min = 0.00001f
+    float 
   }
 
   /**
@@ -67,17 +72,23 @@ public class Jabeja {
     if (config.getNodeSelectionPolicy() == NodeSelectionPolicy.HYBRID
             || config.getNodeSelectionPolicy() == NodeSelectionPolicy.LOCAL) {
       // swap with random neighbors
-      // TODO
+      partner = findPartner(nodeID, getNeighbors(nodep));
     }
 
     if (config.getNodeSelectionPolicy() == NodeSelectionPolicy.HYBRID
             || config.getNodeSelectionPolicy() == NodeSelectionPolicy.RANDOM) {
       // if local policy fails then randomly sample the entire graph
-      // TODO
+      if (partner == null)
+         partner = findPartner(nodeId, getSample(nodeId));
     }
 
     // swap the colors
-    // TODO
+    if (if partner != null) {
+      int color = partner.getColor();
+      partner.setColor(nodep.getColor());
+      nodep.setColor(color);
+      numberOfSwaps++;
+    }
   }
 
   public Node findPartner(int nodeId, Integer[] nodes){
