@@ -19,6 +19,7 @@ public class Jabeja {
   private int round;
   private float T;
   private boolean resultFileCreated = false;
+  private Random random = new Random();
 
   //-------------------------------------------------------------------
   public Jabeja(HashMap<Integer, Node> graph, Config config) {
@@ -50,24 +51,28 @@ public class Jabeja {
    */
   private void saCoolDown(){
 
-    // standard simulated annealing
-    if (T > 1)
-      T -= config.getDelta();
-    if (T < 1)
-      T = 1;
-  }
-    // TODO for second task
-    // new simulated annealing
-    //float T_min = 0.00001f;
-    //float T = 1f;
-    //float delta = config.getDelta();
-    //if (T > T_min){
-    //  T *= delta;
-    //}
-    //if (T < T_min){
-    //  T = T_min;
-    //}
+    // Implementatio for Task 1
+    //if (T > 1)
+    //  T -= config.getDelta();
+    //if (T < 1)
+    //  T = 1;
   //}
+    // Implementation for Task 2
+    float T_min = 0.00001f;
+    float T = 1f;
+    float delta = config.getDelta();
+    if (T > T_min) {
+      T *= delta;
+    }
+    if (T <= T_min) {
+      T = T_min;
+      reset_rounds++;
+            if (reset_rounds == 400){ //restart simulated-annealing again after 400 rounds
+                T = 1;
+                reset_rounds = 0;
+            }
+    }              
+  }
 
   /**
    * Sample and swap algorith at node p
@@ -121,7 +126,20 @@ public class Jabeja {
       int dqp = getDegree(nodeq, nodep.getColor());
       double newvalue = Math.pow(dpq, alpha) + Math.pow(dqp, alpha);
 
-      if ((newvalue * T > oldvalue) && (newvalue > highestBenefit)) {
+      // Implementation according to Task 1
+      //if ((newvalue * T > oldvalue) && (newvalue > highestBenefit)) {
+      //  bestPartner = nodeq;
+      //  highestBenefit = newvalue;
+      //}
+
+      double acceptance_prob = Math.exp((newvalue - oldvalue)/T); 
+
+      // Implementation according to Task 2
+      if (newvalue > oldvalue && acceptance_prob > random.nextDouble()) { //move to the new solution
+        bestPartner = nodeq;
+        highestBenefit = newvalue;
+      }
+      else if(newvalue < oldvalue){
         bestPartner = nodeq;
         highestBenefit = newvalue;
       }
