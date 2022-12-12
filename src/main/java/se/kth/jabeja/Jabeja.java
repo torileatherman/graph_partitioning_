@@ -87,9 +87,28 @@ public class Jabeja {
     Node bestPartner = null;
     double highestBenefit = 0;
 
-    // TODO
+    // find best node as swap partner for node p
+    for (int node : nodes ) {
+      Node nodeq = entireGraph.get(node):
+
+      // compute dpp and dqq
+      int dpp = getDegree(nodep, nodep.getColor());
+      int dqq = getDegree(nodeq, nodeq.getColor());
+      double oldvalue = Math.pow(dpp, alpha) + Math.pow(dqq, alpha);
+
+      // compute dpq and dqp
+      int dpq = getDegree(nodep, nodeq.getColor());
+      int dqp = getDegree(nodeq, nodep.getColor());
+      double newvalue = Math.pow(dpq, alpha) + Math.pow(dqp, alpha);
+
+      if ((newvalue * T > oldvalue) && (newvalue > highestBenefit)) {
+        bestPartner = nodeq;
+        highestBenefit = newvalue;
+      }
 
     return bestPartner;
+    }
+
   }
 
   /**
